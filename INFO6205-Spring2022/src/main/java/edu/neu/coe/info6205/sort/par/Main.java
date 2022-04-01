@@ -36,7 +36,7 @@ public class Main {
         Random random = new Random();
         int[] array = new int[s];
         ArrayList<Long> timeList = new ArrayList<>();
-        for (int j = 50; j < 100; j++) {
+        for (int j = 50; j < 100; j=j+5) {
             ParSort.cutoff = 1000 * (j + 1);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
