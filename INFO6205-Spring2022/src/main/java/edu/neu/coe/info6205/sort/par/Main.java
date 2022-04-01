@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 
+import javax.sql.PooledConnection;
+
 /**
  * This code has been fleshed out by Ziyao Qiao. Thanks very much.
  * TODO tidy it up a bit.
@@ -17,13 +19,25 @@ import java.util.concurrent.ForkJoinPool;
 public class Main {
 
     public static void main(String[] args) {
-        processArgs(args);
-        System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
+       int ccc=1;
+       processArgs(args);
+//       while(ccc<5)
+//      {
+    	
+        int s=1800000;
+        //int tt = 2;
+        System.out.println("\nFOR ARRAY SIZE: " + s +"\n");
+        for(int tt=2;tt<=64;tt*=2)
+        {
+       ForkJoinPool k = new ForkJoinPool(tt);
+       int para=k.getParallelism();
+       System.out.println("Degree of parallelism: " + para);
+       //ParSort.pool=k;
         Random random = new Random();
-        int[] array = new int[2000000];
+        int[] array = new int[s];
         ArrayList<Long> timeList = new ArrayList<>();
         for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
+            ParSort.cutoff = 1000 * (j + 1);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
             long startTime = System.currentTimeMillis();
@@ -34,10 +48,7 @@ public class Main {
             long endTime = System.currentTimeMillis();
             time = (endTime - startTime);
             timeList.add(time);
-
-
             System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
-
         }
         try {
             FileOutputStream fis = new FileOutputStream("./src/result.csv");
@@ -55,6 +66,10 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        tt *= 2;
+        }
+//        ccc++;
+//        }
     }
 
     private static void processArgs(String[] args) {
